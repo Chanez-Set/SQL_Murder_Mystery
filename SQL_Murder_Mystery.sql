@@ -1,5 +1,4 @@
 --  Getting the right repport based on the informations provided 
-
 SELECT * 
 FROM crime_scene_report
 WHERE 	
@@ -45,36 +44,53 @@ WHERE person_id IN (@witness_north, @witness_franklin)
 ;
 
 
+
+
 -- Sus goes to 'Get Fit Now Gym' & was there on January 9th 2018
--- He is Gold member 
+-- He is Gold member, he is man
 -- Bag stated with 48Z
 -- Car plate include 'H42W'
 
 
--- -- Check Gold members that where there in the 09th January
+
+
+-- Check Gold members that where there in the 09th January
 WITH gold_members_48Z AS (
 							SELECT * 
 							FROM get_fit_now_member
 							WHERE	membership_status = 'gold'
 							AND 	id LIKE '48Z%'
 )
--- Check Gold members that where there in the 09th January
+
 SELECT * 
 FROM get_fit_now_check_in
-where check_in_date = 20180109
-AND membership_id IN (
-						SELECT id
-						FROM get_fit_now_member
-						WHERE	membership_status = 'gold'
-						AND 	id LIKE '48Z%'
-)
+where	check_in_date = 20180109
+AND 	membership_id IN (SELECT id FROM gold_members_48Z)
 ;
 
 
 
+-- Check gold members with 48Z infos 
+WITH gold_members_48Z AS (
+							SELECT * 
+							FROM get_fit_now_member
+							WHERE	membership_status = 'gold'
+							AND 	id LIKE '48Z%'
+),
 
+gym_suspects AS (
+				SELECT * 
+				FROM person
+				where	id IN (SELECT person_id FROM gold_members_48Z)
+)
 
-
-
-
+-- Check what matches the sus plates 
+SELECT *
+FROM gym_suspects
+WHERE license_id IN (	SELECT id
+						FROM drivers_license
+						WHERE plate_number LIKE '%H42W%' 
+						AND gender = 'male'
+					)
+;
 
