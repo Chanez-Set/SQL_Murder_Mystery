@@ -33,7 +33,7 @@ FROM person
 WHERE address_street_name LIKE 'Franklin Ave' 
 AND name LIKE '%Annabel%'
 ;
-;
+
 
 
 
@@ -101,3 +101,8 @@ WHERE license_id IN (	SELECT id
 
 -- Part 02 :  try querying the interview transcript of the murderer to find the real villain behind this crime
 -- no more than 2 queries
+
+
+
+
+
