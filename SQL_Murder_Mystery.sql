@@ -103,6 +103,46 @@ WHERE license_id IN (	SELECT id
 -- no more than 2 queries
 
 
+-- Get the interview
+SELECT * 
+FROM interview
+WHERE person_id = 67318
+;
 
+
+-- Women, between 65 and 67, red hair, money rich
+-- Tesla model S
+-- SQL Symphony Concert 3 times decdmber 2017
+
+
+WITH Concert_attendee AS (
+							SELECT *
+							FROM facebook_event_checkin
+							WHERE 	date LIKE '201712__'
+							AND 	event_name = 'SQL Symphony Concert'
+),
+
+sus_car AS (				
+				SELECT * 
+				FROM drivers_license
+				WHERE 	gender = 'female'
+				AND 	hair_color = 'red'
+				AND 	car_make = 'Tesla'
+				AND 	car_model = 'Model S'
+)
+
+SELECT *
+FROM person
+INNER JOIN sus_car
+	ON person.license_id = sus_car.id
+WHERE person.id IN (
+						SELECT 	person_id
+						FROM Concert_attendee
+						GROUP BY person_id
+						HAVING COUNT(person_id) = 3
+)
+;
+
+-- Found : Miranda Priestly
 
 
