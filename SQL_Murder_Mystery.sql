@@ -18,7 +18,7 @@ WITH Northwestern_houses AS (
 								WHERE 	address_street_name LIKE 'Northwestern Dr'
 )
 
-SELECT id 
+SELECT id INTO @witness_north
 FROM Northwestern_houses
 WHERE address_number = 	(
 							SELECT MAX(address_number)
@@ -28,7 +28,7 @@ WHERE address_number = 	(
 
 
 -- 02. Getting the Franklin Ave Witness
-SELECT id
+SELECT id INTO @witness_franklin
 FROM person
 WHERE address_street_name LIKE 'Franklin Ave' 
 AND name LIKE '%Annabel%'
