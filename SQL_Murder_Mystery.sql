@@ -37,7 +37,7 @@ AND name LIKE '%Annabel%'
 
 
 
--- 03. Combining those id's
+-- 03. Combining those id's and reading the interviews
 SELECT * 
 FROM interview
 WHERE person_id IN (@witness_north, @witness_franklin)
@@ -46,8 +46,8 @@ WHERE person_id IN (@witness_north, @witness_franklin)
 
 
 
--- Sus goes to 'Get Fit Now Gym' & was there on January 9th 2018
--- He is Gold member, he is man
+-- Sus is a man, goes to 'Get Fit Now Gym' & was there on January 9th 2018
+-- He is Gold member
 -- Bag stated with 48Z
 -- Car plate include 'H42W'
 
@@ -67,6 +67,7 @@ FROM get_fit_now_check_in
 where	check_in_date = 20180109
 AND 	membership_id IN (SELECT id FROM gold_members_48Z)
 ;
+-- Both of them where there on that day 
 
 
 
@@ -94,3 +95,8 @@ WHERE license_id IN (	SELECT id
 					)
 ;
 
+-- Solution found : Jeremy Bowers
+
+
+
+-- Part 02
